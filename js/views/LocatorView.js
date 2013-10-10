@@ -9,7 +9,7 @@ var app = app || {};
         events: {
             'click #gallery-btn': 'showGallery',
             'click #list-btn': 'showList',
-            'keyup .search-box': 'searchFilter'
+            'input .search-box': 'searchFilter',
         },
 
         initialize: function () {

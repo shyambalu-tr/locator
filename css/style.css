@@ -41,8 +41,8 @@ body::-webkit-scrollbar {
 .search-box {
   width: 800px;
   height: 90px;
-  border: none;
-  background: #ff8000;
+  border: dashed 2px;
+  background: rgba(14, 14, 14, 0.9);
   font-family: 'Deck Reg', sans-serif;
   font-size: 32px;
   color: #fff;
