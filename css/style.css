@@ -1,0 +1,153 @@
+@font-face {
+  font-family: 'Deck Reg';
+  src: local('font/desk/Deck-Reg.otf') format('otf');
+}
+
+
+body {
+  background-color: #0E0E0E;
+  /*overflow-x: hidden;*/
+  /*overflow-y: hidden;*/
+  font-size: 24px;
+  font-family:'Deck Reg', sans-serif;
+  color: white;
+}
+
+body::-webkit-scrollbar {
+  display:none;
+}
+
+#locator {
+  width : 100%;
+  height: 100%;
+}
+
+#view {
+  padding: 0 0 150px 0;
+}
+
+.control-bar {
+  width : 100%;
+  position: fixed;
+  bottom : 20px;
+  right : 20px;
+}
+
+.control-bar input {
+  float: right;
+  padding: 0 0 0 20px;
+}
+
+.search-box {
+  width: 800px;
+  height: 90px;
+  border: none;
+  background: #ff8000;
+  font-family: 'Deck Reg', sans-serif;
+  font-size: 32px;
+  color: #fff;
+  padding: 0 !important;
+
+  background-image: url(../images/search-icon.png);
+  background-position: 20px center;
+  background-repeat: no-repeat;
+
+  text-indent: 90px;
+
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 2s;
+  transition: all 0.2s;
+}
+
+.search-box:focus {
+    background-position: -100px center;
+    text-indent: 20px;
+}
+
+.search-box::-webkit-input-placeholder {
+  color: white;
+}
+
+.search-box:focus::-webkit-input-placeholder {
+  color: transparent;
+
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 2s;
+  transition: all 0.2s;
+}
+
+.search-box::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  background-image: url(../images/search-reset.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 48px;
+  height: 48px;
+  padding: 15px;
+}
+
+#gallery img {
+  float: left;
+}
+
+#list li {
+  width: 50%;
+  height: 170px;
+  float: left;
+  border-bottom: solid 1px #262626;
+
+/*  -webkit-transition: all 0.2s;
+  -moz-transition: all 2s;
+  transition: all 0.2; */
+}
+
+#list li h1 {
+  font-size: 48px;
+  padding: 10px 0;
+}
+
+#list li p {
+  color: #888;
+  padding-bottom: 5px;
+  font-size: 32px;
+}
+
+#list li img {
+  float: left;
+  height: 170px;
+  padding-right: 20px;
+}
+
+#list li.gallery {
+  width: auto;
+  float: left;
+  border: none;
+}
+
+#list li.gallery img {
+  float: left;
+  height: auto;
+  padding-right: 0;
+}
+
+.highlight {
+  color: #ff8000;
+}
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}d

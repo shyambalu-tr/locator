@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" data-framework="backbonejs">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>
+        Locator
+    </title>
+    <link rel='stylesheet' type='text/css' href="css/font/deck-reg.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="locator">
+    	<div id="view" class="cf"></div>
+        <div class="control-bar">
+            <input type="image" id="list-btn" src="images/list-icon.png" alt="Show List" />
+            <input type="image" id="gallery-btn" src="images/gallery-icon.png" alt="Show Galllery" />
+        	<input type="search" incremental="incremental" class="search-box" placeholder="Who are you looking for?" />
+        </div>
+    </div>
+
+    <script type="text/template" id="gallery-template">
+		<img src="images/people/<%= image %>" width="<%= width %>px" height="<%= height %>px" />
+    </script>
+
+    <script type="text/template" id="list-template">
+	        <img src="images/people/<%= image %>"/>
+	        <h1><%= firstname %> <%= secondname %></h1>
+	        <p><%= jobtitle %></p>
+	        <p><%= phonenumber %></p>
+	</script>
+
+    <script type="text/javascript" src="vendor/zepto.js"></script>
+    <script type="text/javascript" src="vendor/lodash.underscore.min.js"></script>
+    <script type="text/javascript" src="vendor/backbone.js"></script>
+
+    <script type="text/javascript" src="js/data/data.js"></script>
+    <script type="text/javascript" src="js/models/Employee.js"></script>
+    <script type="text/javascript" src="js/collections/Employees.js"></script>
+    <script type="text/javascript" src="js/views/EmployeeView.js"></script>
+    <script type="text/javascript" src="js/views/ListView.js"></script>
+    <script type="text/javascript" src="js/views/LocatorView.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+</body>
+
+</html>

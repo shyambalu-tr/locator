@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Deck Reg';
+    src: url('deck-reg-webfont.eot');
+    src: url('deck-reg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('deck-reg-webfont.woff') format('woff'),
+         url('deck-reg-webfont.ttf') format('truetype'),
+         url('deck-reg-webfont.svg#deck_regregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
