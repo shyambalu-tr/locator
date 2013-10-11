@@ -61,12 +61,15 @@ var app = app || {};
 
         filter: function (filterval) {
 
-            var filterRE = new RegExp('(' + (filterval.trim().split(" ")).join('|') + ')', 'gi');
+            filterval = filterval.trim().replace(/\s{2,}/g,' ');
+            var filterRE = new RegExp('(' + filterval.split(' ').join('|') + ')', 'gi');
 
             // var test = _.some(_.values(_.pick(this.model.attributes, this.keys)), function (val) {
             //     val = (!isNaN(val) ? val.toString() : val);
             //     return filterRE.test(val);
             // });
+
+            console.log(filterRE);
 
             var needles = filterval.trim().split(" ");
             var values = _.values(_.pick(this.model.attributes, this.keys));
@@ -80,7 +83,7 @@ var app = app || {};
                 for (var j = 0; j < values.length; j++) {
                     needleexist = values[j].toLowerCase().indexOf(needles[i].toLowerCase()) >= 0;
                     if (needleexist) {
-                        break
+                        break;
                     }
                 }
                 test.push(needleexist);
