@@ -12,23 +12,81 @@ var app = app || {};
             this.$el.append(this.mapTemplate({}));
             this.pillars = this.$('.pillar');
             this.model = {};
-            this.pillar = {};
+            this.pillar = null;
+            this.desk = null;
 
             this.listenTo(Backbone, "emview:click", this.render);
             this.listenTo(Backbone, "view:rendered", this.animateLocation);
         },
 
         render: function(em) {
+            console.log(this);
             this.model = em.model.toJSON();
             this.$('#info').html(this.listTemplate(this.model));
+            this.$el.css({
+                opacity: 0
+            });
+
         },
 
         animateLocation: function(em) {
-            var desk = '#' + this.model.deskid;
-            this.$(desk).css({opacity: 1});
+            
+            var _this = this;
+            console.log("test");
+            
+            if (this.pillar !== null) {
+                this.pillar.style.opacity = 0;
+            }
 
-            var pillar = this.calcClosePillar(this.$(desk));
-            this.$(pillar).css({opacity: 1});
+            if (this.desk !== null) {
+                document.getElementById(this.desk.replace('#', "")).style.opacity = 0;
+            }
+
+            this.$('#map-svg').css({
+                opacity: 0
+            });
+
+            this.$('#youAreHere').css({
+                opacity: 0
+            });
+
+            this.$('#lineOfSight').css({
+                opacity: 0
+            });
+
+            setTimeout(function() {
+                _this.$el.animate({opacity: 1}, 200, 'ease-in');
+            }, 0);
+
+            this.desk = '#' + this.model.deskid;
+            this.pillar = this.calcClosePillar(this.$(this.desk));
+
+            var _desk = this.desk;
+            var _pillar = this.pillar;
+
+            setTimeout(function() {
+                _this.$('#map-svg').css({
+                    opacity: 1
+                });
+            }, 300);
+
+            setTimeout(function() {
+                _this.$('#youAreHere').css({
+                    opacity: 1
+                });
+            }, 900);
+
+            setTimeout(function() {
+                _this.$(_desk).css({
+                    opacity: 1
+                });
+            }, 900);
+
+            setTimeout(function() {
+                _this.$(_pillar).css({
+                    opacity: 1
+                });
+            }, 900);
 
         },
 

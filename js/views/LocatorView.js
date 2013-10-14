@@ -26,14 +26,15 @@ var app = app || {};
         },
 
         render: function() {
-            this.currentView.$el.css({
+            this.$('#view').css({
                 opacity: 0
             });
             this.$('#view').html(this.currentView.el);
-            this.currentView.$el.animate({
+            this.$('#view').animate({
                 opacity: 1
             }, 200, 'ease-in', function() {
-                if (this.id === "map") {
+                // console.log(this.firstChild.id);
+                if (this.firstChild.id === "map") {
                     Backbone.trigger("view:rendered");
                 }
             });
@@ -47,19 +48,19 @@ var app = app || {};
         },
 
         showGallery: function() {
+            this.changeView(this.list);
             if (this.state !== "gallery") {
                 this.state = "gallery";
                 Backbone.trigger("view:state", "gallery");
-                this.changeView(this.list);
                 this.render();
             }
         },
 
         showList: function() {
+            this.changeView(this.list);
             if (this.state !== "list") {
                 this.state = "list";
                 Backbone.trigger("view:state", "list");
-                this.changeView(this.list);
                 this.render();
             }
         },

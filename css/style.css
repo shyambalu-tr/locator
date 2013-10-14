@@ -103,9 +103,9 @@ body::-webkit-scrollbar {
     padding-right: 20px;
 }
 
-#info h1 {
-    font-size: 48px;
-    padding: 10px 0;
+#map-svg {
+    opacity: 0;
+    -webkit-transition: all 0.3s;
 }
 
 #info {
@@ -113,6 +113,38 @@ body::-webkit-scrollbar {
     width: 60%;
     background-color: rgb(22, 22, 22);
     padding: 20px;
+    -webkit-transition: all 0.3s;
+}
+
+#info h1 {
+    font-size: 48px;
+    padding: 10px 0;
+}
+
+#lineOfSight,
+#youAreHere {
+    position : absolute;
+    z-index : 5;
+    -webkit-transition: all 0.3s;
+    /*display : none;*/
+}
+
+#lineOfSight {
+    width : 348px;
+    height: 341px;
+    background : url('../images/lineOfSight.png') no-repeat 0 0;
+    top: 270px;
+    left: 820px;
+    opacity: 0;
+}
+
+#youAreHere {
+    background: url('../images/youAreHere.png') no-repeat 0 0;
+    top: 573px;
+    left: 1172px;
+    width : 122px;
+    height: 26px;
+    opacity: 0;
 }
 
 #info p {
@@ -261,9 +293,7 @@ body::-webkit-scrollbar {
     opacity: 0;
     border: 1px solid #FF8000;
     margin: 0 0 -1px -1px;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 2s;
-    transition: all 0.2s;
+    -webkit-transition: all 0.3s;
 }
 
 #dG, #dH, #dK, #dL {
@@ -282,9 +312,7 @@ body::-webkit-scrollbar {
     background: rgba(11, 103, 139, 0.65);
     border: 1px dashed rgba(255, 255, 255, 0.15);
     opacity: 0;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 2s;
-    transition: all 0.2s;
+    -webkit-transition: all 0.3s;
 }
 
 .top-pillars {
