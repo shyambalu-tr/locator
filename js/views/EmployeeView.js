@@ -1,6 +1,6 @@
 var app = app || {};
 
-(function ($) {
+(function($) {
 
     app.EmployeeView = Backbone.View.extend({
 
@@ -8,19 +8,25 @@ var app = app || {};
         listTemplate: _.template($('#list-template').html()),
         galleryTemplate: _.template($('#gallery-template').html()),
 
-        initialize: function () {
+        events: {
+            'click': 'clickHandler'
+        },
+
+        initialize: function() {
 
             this.listHtml = this.listTemplate(this.model.toJSON());
 
             this.keys = ['firstname', 'secondname', 'jobtitle'];
-            // this.keys = ['firstname', 'secondname'];
-            this.state = 'gallery';
             this.listenTo(Backbone, "view:state", this.setState);
             this.listenTo(Backbone, "window:resize", _.debounce(this.windowResize));
             this.listenTo(Backbone, "view:filter", this.filter);
         },
 
-        render: function () {
+        clickHandler: function(event) {
+            Backbone.trigger("emview:click", this);
+        },
+
+        render: function() {
 
             if (this.state === 'list') {
                 this.$el.css({
@@ -44,7 +50,7 @@ var app = app || {};
             return this;
         },
 
-        setState: function (state) {
+        setState: function(state) {
             if (this.state !== state) {
                 this.state = state;
                 // console.log(state);
@@ -53,15 +59,15 @@ var app = app || {};
             }
         },
 
-        windowResize: function (state) {
+        windowResize: function(state) {
             if (this.state === 'gallery') {
                 this.render();
             }
         },
 
-        filter: function (filterval) {
+        filter: function(filterval) {
 
-            filterval = filterval.trim().replace(/\s{2,}/g,' ');
+            filterval = filterval.trim().replace(/\s{2,}/g, ' ');
             var filterRE = new RegExp('(' + filterval.split(' ').join('|') + ')', 'gi');
 
             // var test = _.some(_.values(_.pick(this.model.attributes, this.keys)), function (val) {
@@ -95,28 +101,27 @@ var app = app || {};
             } else {
                 this.hide();
             }
-
         },
 
-        show: function () {
+        show: function() {
             this.$el.css({
-                'display': 'list-item'
+                'display': 'block'
             });
         },
 
-        hide: function () {
+        hide: function() {
             this.$el.css({
                 'display': 'none'
             });
         },
 
-        highlight: function (re) {
+        highlight: function(re) {
             if (this.state !== "gallery") {
                 this.$el.html(this.listHtml);
                 // var re = new RegExp("(" + this.filterval + ")", 'gi');
                 // console.log(this.$el.html());
 
-                var t = this.$el.contents().filter(function () {
+                var t = this.$el.contents().filter(function() {
                     return this.nodeType === 1;
                 });
 
