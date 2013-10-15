@@ -3,6 +3,8 @@ body {
     font-size: 24px;
     font-family:'Deck Reg', sans-serif;
     color: white;
+    overflow-x:scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 body::-webkit-scrollbar {
@@ -136,6 +138,7 @@ body::-webkit-scrollbar {
     top: 270px;
     left: 820px;
     opacity: 0;
+    -webkit-transform-origin: 350px 305px;
 }
 
 #youAreHere {

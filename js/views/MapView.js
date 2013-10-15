@@ -32,7 +32,6 @@ var app = app || {};
         animateLocation: function(em) {
             
             var _this = this;
-            console.log("test");
             
             if (this.pillar !== null) {
                 this.pillar.style.opacity = 0;
@@ -51,7 +50,8 @@ var app = app || {};
             });
 
             this.$('#lineOfSight').css({
-                opacity: 0
+                'opacity': '0',
+                '-webkit-transform': 'rotate(0deg)'
             });
 
             setTimeout(function() {
@@ -60,7 +60,8 @@ var app = app || {};
 
             this.desk = '#' + this.model.deskid;
             this.pillar = this.calcClosePillar(this.$(this.desk));
-
+            
+            var degree = 'rotate(' + this.calcDegree(this.model.deskid) + 'deg)';
             var _desk = this.desk;
             var _pillar = this.pillar;
 
@@ -85,6 +86,13 @@ var app = app || {};
             setTimeout(function() {
                 _this.$(_pillar).css({
                     opacity: 1
+                });
+            }, 900);
+
+            setTimeout(function() {
+                _this.$('#lineOfSight').css({
+                    'opacity': '1',
+                    '-webkit-transform': degree
                 });
             }, 900);
 
@@ -119,6 +127,22 @@ var app = app || {};
                 }
             }
             return pillar;
+        },
+
+        calcDegree: function (desk) {
+
+            desk = desk.split('d')[1];
+
+            for( var p in app.degree ){
+                
+                if( app.degree[p].indexOf( parseInt(desk,10) ) > -1 ){
+                    var deg = parseInt(p, 10);
+                    console.log(deg);
+                    deg = deg > 180 ? (360 - deg) * -1 : deg; 
+
+                    return deg;
+                }
+            }
         }
 
     });
