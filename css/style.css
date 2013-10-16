@@ -1,10 +1,9 @@
 body {
-    background-color: #0E0E0E;
+    background-color: rgba(14, 14, 14, 0.94);
     font-size: 24px;
     font-family:'Deck Reg', sans-serif;
     color: white;
-    overflow-x:scroll;
-    -webkit-overflow-scrolling:touch;
+    -webkit-user-select: none;
 }
 
 body::-webkit-scrollbar {
@@ -18,6 +17,10 @@ body::-webkit-scrollbar {
 
 #view {
     padding: 0 0 150px 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 .control-bar {

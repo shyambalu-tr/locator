@@ -20,7 +20,6 @@ var app = app || {};
         },
 
         render: function(em) {
-            console.log(this);
             this.model = em.model.toJSON();
             this.$('#info').html(this.listTemplate(this.model));
             this.$el.css({
@@ -104,7 +103,7 @@ var app = app || {};
                 var desk = '#d' + i;
                 var pillar = this.calcClosePillar(this.$(desk));
                 // console.log(this.$(desk).html($(pillar).html()));
-                this.$(desk).html(pillar.html());
+                this.$(desk).html(i);
             }
         },
 
@@ -119,7 +118,7 @@ var app = app || {};
 
                 var dist = Math.sqrt(x * x + y * y);
 
-                console.log($(this.pillars[i]).html(), x, y, dist);
+                // console.log($(this.pillars[i]).html(), x, y, dist);
 
                 if (dist < min) {
                     min = dist;
@@ -138,7 +137,7 @@ var app = app || {};
                 if( app.degree[p].indexOf( parseInt(desk,10) ) > -1 ){
                     var deg = parseInt(p, 10);
                     console.log(deg);
-                    deg = deg > 180 ? (360 - deg) * -1 : deg; 
+                    deg = deg > 180 ? (360 - deg) * -1 : deg;
 
                     return deg;
                 }

@@ -9,7 +9,7 @@ var app = app || {};
         galleryTemplate: _.template($('#gallery-template').html()),
 
         events: {
-            'click': 'clickHandler'
+            'tap': 'clickHandler'
         },
 
         initialize: function() {
@@ -17,12 +17,14 @@ var app = app || {};
             this.listHtml = this.listTemplate(this.model.toJSON());
 
             this.keys = ['firstname', 'secondname', 'jobtitle'];
+
             this.listenTo(Backbone, "view:state", this.setState);
             this.listenTo(Backbone, "window:resize", _.debounce(this.windowResize));
             this.listenTo(Backbone, "view:filter", this.filter);
         },
 
         clickHandler: function(event) {
+            console.log(event);
             Backbone.trigger("emview:click", this);
         },
 
@@ -75,14 +77,14 @@ var app = app || {};
             //     return filterRE.test(val);
             // });
 
-            console.log(filterRE);
+            // console.log(filterRE);
 
             var needles = filterval.trim().split(" ");
             var values = _.values(_.pick(this.model.attributes, this.keys));
             var test = [];
 
-            console.log(values);
-            console.log(needles);
+            // console.log(values);
+            // console.log(needles);
 
             for (var i = 0; i < needles.length; i++) {
                 var needleexist = false;
@@ -97,7 +99,8 @@ var app = app || {};
 
             if (test.every(Boolean)) {
                 this.show();
-                this.highlight(filterRE);
+                this.re = filterRE;
+                this.highlight();
             } else {
                 this.hide();
             }
@@ -115,7 +118,7 @@ var app = app || {};
             });
         },
 
-        highlight: function(re) {
+        highlight: function() {
             if (this.state !== "gallery") {
                 this.$el.html(this.listHtml);
                 // var re = new RegExp("(" + this.filterval + ")", 'gi');
@@ -128,7 +131,7 @@ var app = app || {};
                 // console.log(t);
 
                 for (var i = 0; i < t.length; i++) {
-                    t[i].innerHTML = t[i].innerHTML.replace(re, '<span class="highlight">$1</span>');
+                    t[i].innerHTML = t[i].innerHTML.replace(this.re, '<span class="highlight">$1</span>');
                     // console.log($(t[i]).html());
                 }
             }

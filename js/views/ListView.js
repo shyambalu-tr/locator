@@ -5,6 +5,7 @@ var app = app || {};
     app.ListView = Backbone.View.extend({
 
         tagName: 'ul',
+        className: 'cf',
         id: 'list',
 
         initialize: function () {
