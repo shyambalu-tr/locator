@@ -19,6 +19,7 @@ var app = app || {};
             this.map = new app.MapView();
             this.scrollSet = false;
             this.scroll = null;
+            this.mapTimer = null;
 
             this.listenTo(Backbone, "emview:click", this.showMap);
             this.listenTo(Backbone, "view:reflow", this.reflow);
@@ -64,6 +65,10 @@ var app = app || {};
         },
 
         changeView: function(view) {
+            if (typeof this.mapTimer == "number") {
+                clearTimeout(this.mapTimer);
+            }
+
             if (this.currentView !== view) {
                 this.currentView = view;
                 this.render();
@@ -89,23 +94,30 @@ var app = app || {};
         },
 
         searchFilter: function(event) {
-            this.showList();
             Backbone.trigger("view:filter", event.target.value);
             this.reflow();
         },
 
         showMap: function(em) {
+            var that = this;
+
             this.changeView(this.map);
             this.$('.search-box').blur();
+
+            this.mapTimer = setTimeout(function() {
+                $('.search-box').val('');
+                Backbone.trigger("view:filter", '');
+                that.showGallery();
+            }, 60000);
+
         },
 
         addMargin: function() {
-            if (this.currentView === this.list) {
-                var virtualKeyboardMargin = $(window).scrollTop() + 270;
-                this.$('#view').css({
-                    'margin-top': virtualKeyboardMargin
-                });
-            }
+            this.showList();
+            var virtualKeyboardMargin = $(window).scrollTop() + 270;
+            this.$('#view').css({
+                'margin-top': virtualKeyboardMargin
+            });
         },
 
         removeMargin: function() {
