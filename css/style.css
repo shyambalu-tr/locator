@@ -20,7 +20,11 @@ body::-webkit-scrollbar {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100%;
+    overflow: hidden;
+}
+
+#list {
+    padding: 0 0 150px 0;
 }
 
 .control-bar {
