@@ -15,6 +15,7 @@ var app = app || {};
         initialize: function() {
 
             this.listHtml = this.listTemplate(this.model.toJSON());
+            this.timer = null;
 
             this.keys = ['firstname', 'secondname', 'jobtitle'];
 
@@ -49,7 +50,31 @@ var app = app || {};
                 this.$el.html(this.galleryTemplate(em));
             }
 
+            this.setTimer();
+
             return this;
+        },
+
+        setTimer: function() {
+
+            var rand = Math.floor(Math.random() * 60000);
+            var that = this;
+
+            this.timer = setTimeout(function() {
+                if (that.state === "gallery") {
+                    that.$('img').css({
+                        'z-index': '2',
+                        '-webkit-transform': 'scale(1.2, 1.2)'
+                    });
+                    setTimeout(function() {
+                        that.$('img').css({
+                            'z-index': '1',
+                            '-webkit-transform': 'scale(1, 1)'
+                        });
+                    }, 500);
+                    that.setTimer();
+                }
+            }, rand);
         },
 
         setState: function(state) {
