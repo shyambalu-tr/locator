@@ -12,6 +12,7 @@ var app = app || {};
             'input .search-box': 'searchFilter',
             'focus .search-box': 'addMargin',
             'blur  .search-box': 'removeMargin',
+            'swipe #view': 'reset'
         },
 
         initialize: function() {
@@ -64,14 +65,28 @@ var app = app || {};
             }
         },
 
-        changeView: function(view) {
+        reset: function (event) {
+            console.log('reset');
+            var that = this;
+
             if (typeof this.mapTimer == "number") {
                 clearTimeout(this.mapTimer);
             }
 
+            this.mapTimer = setTimeout(function() {
+                $('.search-box').val('');
+                $('.search-box').blur();
+                Backbone.trigger("view:filter", '');
+                that.showGallery();
+            }, 60000);
+        },
+
+        changeView: function(view) {
+
             if (this.currentView !== view) {
                 this.currentView = view;
                 this.render();
+                this.reset();
             }
         },
 
@@ -96,24 +111,17 @@ var app = app || {};
         searchFilter: function(event) {
             Backbone.trigger("view:filter", event.target.value);
             this.reflow();
+            this.reset();
         },
 
         showMap: function(em) {
-            var that = this;
-
             this.changeView(this.map);
             this.$('.search-box').blur();
-
-            this.mapTimer = setTimeout(function() {
-                $('.search-box').val('');
-                Backbone.trigger("view:filter", '');
-                that.showGallery();
-            }, 60000);
-
         },
 
         addMargin: function() {
             this.showList();
+            this.reset();
             var virtualKeyboardMargin = $(window).scrollTop() + 270;
             this.$('#view').css({
                 'margin-top': virtualKeyboardMargin
@@ -121,6 +129,7 @@ var app = app || {};
         },
 
         removeMargin: function() {
+            this.reset();
             this.$('#view').css({
                 'margin-top': '0'
             });

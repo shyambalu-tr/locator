@@ -84,10 +84,6 @@ body::-webkit-scrollbar {
     padding: 15px;
 }
 
-#gallery img {
-    float: left;
-}
-
 #list li {
     width: 50%;
     height: 170px;
@@ -180,6 +176,11 @@ body::-webkit-scrollbar {
     float: left;
     height: auto;
     padding-right: 0;
+
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 2s;
+    transition: all 0.2s;
+
 }
 
 .highlight {
