@@ -131,18 +131,17 @@ body::-webkit-scrollbar {
 #youAreHere {
     position : absolute;
     z-index : 5;
-    -webkit-transition: all 0.3s;
+    pointer-events:none;
     /*display : none;*/
 }
 
 #lineOfSight {
-    width : 348px;
-    height: 341px;
-    background : url('../images/lineOfSight.png') no-repeat 0 0;
-    top: 270px;
-    left: 584px;
-    opacity: 0;
-    -webkit-transform-origin: 350px 305px;
+    width: 368px;
+    height: 79px;
+    background: url('../images/lineOfSightH.png') no-repeat 0 0;
+    top: 535px;
+    left: 936px;
+    -webkit-transform-origin: 0% 50%;
 }
 
 #youAreHere {
@@ -152,6 +151,7 @@ body::-webkit-scrollbar {
     width : 122px;
     height: 26px;
     opacity: 0;
+    -webkit-transition: all 0.3s;
 }
 
 #info p {
@@ -177,6 +177,7 @@ body::-webkit-scrollbar {
     height: auto;
     padding-right: 0;
     position: absolute;
+    z-index: 1;
 
     -webkit-transition: all 0.5s;
     transition: all 0.5s;

@@ -50,23 +50,30 @@ var app = app || {};
                 this.$el.html(this.galleryTemplate(em));
             }
 
-            this.setTimer();
+            // this.setTimer();
 
             return this;
         },
 
         setTimer: function() {
 
-            var rand = Math.floor(Math.random() * 60000);
+            var rand = Math.floor((Math.random() * 6000));
             var that = this;
 
             this.timer = setTimeout(function() {
                 if (that.state === "gallery") {
+                    that.$el.css({
+                        'z-index': '9999'
+                    });
                     that.$('img').css({
-                        'z-index': '2',
+                        'z-index': '9999',
                         '-webkit-transform': 'scale(1.2, 1.2)'
                     });
                     setTimeout(function() {
+
+                        that.$el.css({
+                            'z-index': '1'
+                        });
                         that.$('img').css({
                             'z-index': '1',
                             '-webkit-transform': 'scale(1, 1)'

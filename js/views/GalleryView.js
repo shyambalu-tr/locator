@@ -17,7 +17,7 @@ var app = app || {};
             this.$el.empty();
             app.employees.each(function (item) {
                 var em = item.toJSON();
-                em.width = ($(window).width() / 6);
+                em.width = ($(window).width() / 5);
                 em.height = em.width * 0.75;
                 this.$el.append(this.template(em));
             }, this);

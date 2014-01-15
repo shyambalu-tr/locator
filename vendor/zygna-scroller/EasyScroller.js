@@ -167,12 +167,12 @@ EasyScroller.prototype.bindEvents = function() {
 
 		}, false);
 
-		this.container.addEventListener("mousewheel", function(e) {
-			if(that.options.zooming) {
-				that.scroller.doMouseZoom(e.wheelDelta, e.timeStamp, e.pageX, e.pageY);
-				e.preventDefault();
-			}
-		}, false);
+		// this.container.addEventListener("mousewheel", function(e) {
+		// 	if(that.options.zooming) {
+		// 		that.scroller.doMouseZoom(e.wheelDelta, e.timeStamp, e.pageX, e.pageY);
+		// 		e.preventDefault();
+		// 	}
+		// }, false);
 
 	}
 

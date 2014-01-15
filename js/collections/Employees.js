@@ -7,4 +7,5 @@ var app = app || {};
     });
 
     app.employees = new Employees();
+
 })();

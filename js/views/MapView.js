@@ -15,23 +15,42 @@ var app = app || {};
             this.pillar = null;
             this.desk = null;
 
+            _this = this;
+            // console.log(this.$('.desks'));
+            this.$('.desks').on('tap', function(e) {
+                console.log(e.target.id);
+
+                em = app.employees.findWhere({
+                    deskid: e.target.id
+                });
+
+                if (em) {
+                    _this.render(app.employees.findWhere({
+                        deskid: e.target.id
+                    }));
+                    _this.animateLocation();
+                }
+            });
+
             this.listenTo(Backbone, "emview:click", this.render);
             this.listenTo(Backbone, "view:rendered", this.animateLocation);
         },
 
         render: function(em) {
-            this.model = em.model.toJSON();
+            if (em.model) this.model = em.model.toJSON();
+            else this.model = em.toJSON();
+
             this.$('#info').html(this.listTemplate(this.model));
             this.$el.css({
                 opacity: 0
             });
 
+            // this.testClosePillar();
         },
 
-        animateLocation: function(em) {
-            
+        animateLocation: function() {
             var _this = this;
-            
+
             if (this.pillar !== null) {
                 this.pillar.style.opacity = 0;
             }
@@ -48,18 +67,26 @@ var app = app || {};
                 opacity: 0
             });
 
-            this.$('#lineOfSight').css({
+            this.$('#lineOfSight').animate({
                 'opacity': '0',
-                '-webkit-transform': 'rotate(0deg)'
+                '-webkit-transform': 'rotate(0deg)',
+            }, 0, 'ease-in', function() {
+                _this.animateContinue();
             });
+        },
+
+        animateContinue: function() {
+            var _this = this;
 
             setTimeout(function() {
-                _this.$el.animate({opacity: 1}, 200, 'ease-in');
+                _this.$el.animate({
+                    opacity: 1
+                }, 200, 'ease-in');
             }, 0);
 
             this.desk = '#' + this.model.deskid;
             this.pillar = this.calcClosePillar(this.$(this.desk));
-            
+
             var degree = 'rotate(' + this.calcDegree(this.model.deskid) + 'deg)';
             var _desk = this.desk;
             var _pillar = this.pillar;
@@ -89,20 +116,17 @@ var app = app || {};
             }, 900);
 
             setTimeout(function() {
-                _this.$('#lineOfSight').css({
+                _this.$('#lineOfSight').animate({
                     'opacity': '1',
-                    '-webkit-transform': degree
-                });
+                    '-webkit-transform': degree,
+                }, 1000, 'ease-in-out');
             }, 900);
-
         },
 
         testClosePillar: function() {
-
             for (var i = 0; i < 144; i++) {
                 var desk = '#d' + i;
                 var pillar = this.calcClosePillar(this.$(desk));
-                // console.log(this.$(desk).html($(pillar).html()));
                 this.$(desk).html(i);
             }
         },
@@ -128,20 +152,19 @@ var app = app || {};
             return pillar;
         },
 
-        calcDegree: function (desk) {
+        calcDegree: function(desk) {
+            var p1 = $('#' + desk).offset();
+            var p2 = $('#lineOfSight').offset();
+            var delta_x = (p1.left + (p1.width / 2)) - p2.left;
+            var delta_y = (p2.top + (p2.height / 2)) - (p1.top + (p1.height / 2));
 
-            desk = desk.split('d')[1];
+            console.log(p1, p2);
+            console.log(delta_x, delta_y);
 
-            for( var p in app.degree ){
-                
-                if( app.degree[p].indexOf( parseInt(desk,10) ) > -1 ){
-                    var deg = parseInt(p, 10);
-                    console.log(deg);
-                    deg = deg > 180 ? (360 - deg) * -1 : deg;
+            var deg = Math.ceil(Math.atan2(delta_y, delta_x) * (180 / 3.14159265)) * -1;
+            console.log(deg);
 
-                    return deg;
-                }
-            }
+            return deg;
         }
 
     });

@@ -21,9 +21,9 @@ var app = app || {};
             this.scrollSet = false;
             this.scroll = null;
             this.mapTimer = null;
+            this.animateTimer = null;
 
             this.listenTo(Backbone, "emview:click", this.showMap);
-            this.listenTo(Backbone, "view:reflow", this.reflow);
 
             this.currentView = this.list;
             Backbone.trigger("view:state", "gallery");
@@ -50,22 +50,47 @@ var app = app || {};
                 this.scroll = new EasyScroller(this.list.el, {
                     scrollingX: false,
                     scrollingY: true,
-                    zooming: false,
-                    speedMultiplier: 2
+                    zooming: true,
+                    speedMultiplier: 2,
+                    animationDuration: 800,
                 });
                 this.scrollSet = true;
             }
-            this.reflow();
         },
 
-        reflow: function() {
+        reflow: function(reset) {
             if (this.currentView === this.list && this.scrollSet === true) {
-                this.scroll.scroller.scrollTo(0, 0, false);
+                if (reset) {
+                    this.scroll.scroller.scrollTo(0, 0, false);
+                }
                 this.scroll.reflow();
             }
         },
 
-        reset: function (event) {
+        animateView: function() {
+            var rand = Math.floor(Math.random() * 500);
+            var that = this;
+
+            var idx = Math.floor(Math.random() * app.employees.length);
+            var elem = this.list.el.children[idx];
+            var transform = elem.offsetLeft + "px " + elem.offsetTop + "px";
+
+            console.log($(elem).html());
+            console.log(transform);
+
+            this.animateTimer = setTimeout(function() {
+                if (that.state === "gallery") {
+                    // that.scroll.scroller.scrollTo(elem.offsetLeft, elem.offsetTop);
+                    that.scroll.scroller.zoomBy(2, true, elem.offsetLeft, elem.offsetTop);
+                    setTimeout(function() {
+                        that.scroll.scroller.zoomBy((1 / 2), true, elem.offsetLeft, elem.offsetTop);
+                    }, 1500);
+                    that.animateView();
+                }
+            }, 3500);
+        },
+
+        reset: function(event) {
             console.log('reset');
             var that = this;
 
@@ -96,6 +121,7 @@ var app = app || {};
                 this.state = "gallery";
                 Backbone.trigger("view:state", "gallery");
                 this.render();
+                this.reflow(false);
             }
         },
 
@@ -105,12 +131,13 @@ var app = app || {};
                 this.state = "list";
                 Backbone.trigger("view:state", "list");
                 this.render();
+                this.reflow(false);
             }
         },
 
         searchFilter: function(event) {
             Backbone.trigger("view:filter", event.target.value);
-            this.reflow();
+            this.reflow(true);
             this.reset();
         },
 
@@ -122,6 +149,7 @@ var app = app || {};
         addMargin: function() {
             this.showList();
             this.reset();
+            // this.reflow(true);
             var virtualKeyboardMargin = $(window).scrollTop() + 270;
             this.$('#view').css({
                 'margin-top': virtualKeyboardMargin
@@ -130,6 +158,7 @@ var app = app || {};
 
         removeMargin: function() {
             this.reset();
+            // this.reflow(true);
             this.$('#view').css({
                 'margin-top': '0'
             });
